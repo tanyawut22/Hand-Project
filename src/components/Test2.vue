@@ -1,6 +1,6 @@
 <script>
 import { Line } from 'vue-chartjs'
-// var xVal= 0;
+
 export default {
   extends: Line,
   data() {
@@ -8,14 +8,12 @@ export default {
         dps: [],
         xVal: 0,
         yVal: 0,
-        // count: 1,
-        j: 0,
       chartData: {
-          labels: ['10','20','30','40','50','60','70','80','90','100'],
+          labels: [this.xVal],
           datasets: [
             {
               label: 'Line Chart',
-              data: [],
+              data: [this.yVal],
               fill: false,
               borderColor: '#2554FF',
               backgroundColor: '#2554FF',
@@ -48,61 +46,34 @@ export default {
     }
   },
     methods: {
-      
         CountNum (){
-        // var updateChart = function (count) {
-        // count = count || 1;
-        // // count is number of times loop runs to generate random dataPoints.
-        // let tes = this;
-        // for (var j = 0; j < count; j++) {	
-        //   // this.yVal = Math.round(Math.random() *42.53);
-        //   this.xVal += 1;
-        // }
-        // // console.log(this.yVal);
-        // console.log(this.xVal+" sec");
-        // };
-        // this.xVal+=1;
-        console.log(this.xVal+" sec");
-        this.updateChart();
-      },
-
-      updateChart: function (count){
+        var updateChart = function (count) {
         count = count || 1;
         // count is number of times loop runs to generate random dataPoints.
-        // let tes = this;
-        for (this.j = 0; this.j < count; this.j++) {	
+        for (var j = 0; j < count; j++) {	
           // this.yVal = Math.round(Math.random() *42.53);
-          this.xVal+=1;
-          console.log(this.xVal+" sec");
+          this.xVal++;
         }
-        // console.log(this.yVal);
-        // console.log(this.xVal+" sec");
-        // this.updateChart(count);
-      }
+        console.log(this.yVal);
+        console.log(this.xVal+" sec");
+        };
+        setInterval(function(){ updateChart() }, 1000);
+      },
     },
     watch: {
         xVal: function (){
             let th = this;
-          console.log("watch "+th.xVal);
+          console.log(th.xVal);
         }
     },
-    // beforeUpdate () {
-    //   console.log("beforeUpdate");
-    //   this.CountNum();
-    // },
     mounted () {
-      
+      this.CountNum();
       console.log("mounted");
       this.renderChart(this.chartdata, this.options);
       // setInterval(function(){ CountNum() }, 1000);
     },
-    created(){
-      console.log("created");
-      this.CountNum();
-    },
     updated () {
       console.log("updated")
-      console.log("updated +" + this.xVal)
       // this.renderChart(this.chartData, this.options)
     }
 }

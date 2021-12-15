@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-// var CanvasJS = require('./canvasjs.min');
-// CanvasJS = CanvasJS.Chart ? CanvasJS : window.CanvasJS;
 
 Vue.use(Router)
 

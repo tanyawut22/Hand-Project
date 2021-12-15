@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="sidebar">
-      <div class="insidebar">
+      <div class="insidebar" style="margin: 60px">
         <tr>
         <h2 style="color: white">Welcome</h2>
         </tr>
@@ -36,18 +36,44 @@
         <button type="button" class="btn btn-secondary btn-lg" style="margin-left: 50px"><router-link to="/ModeTwo">30 - 45 sec</router-link></button>
       </tr>
     </div>
-    <footer>
+    <!-- <footer>
       <p>© 2021 Lorem ipsum</p>
-    </footer>
+    </footer> -->
 </div>
 </template>
-
 <script>
+// import {db} from '../config'
 export default {
     name:'Home',
-    components: {
-  }
+    data(){
+      return{
+
+      }
+    },
+    created(){
+      // this.GetData();
+    },
+//     methods:{
+//       GetData(){
+// // //       db.collection("Students").get().then((querySnapshot) => {
+// // //         querySnapshot.forEach((doc) => {
+// // //         // doc.data() is never undefined for query doc snapshots
+// // //           console.log(doc.id, " => ", doc.data());
+// // //     });
+// // // });
+//          db.collection("Students").doc()
+//                 .collection('15sec').doc().get().then((querySnapshot) => {
+//                 querySnapshot.forEach((doc) => {
+//                 // doc.data() is never undefined for query doc snapshots
+//                   console.log(doc.id, " => ", doc.data());
+//             });
+//             });
+//     },
+//   //   components: {
+//   // }
+// }
 }
+
 
 </script>
 
@@ -88,7 +114,7 @@ footer {
 .insidebar {
   position: relative;
   text-align: center;
-  top: 20%;
+  top: 10%;
   /* transform: translateY(-50%); */
   /* margin: 0 15%; */
   font-weight: bold;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="sidebar">
-      <div class="insidebar">
+      <div class="insidebar" style="margin: 60px">
         <tr>
         <h2 style="color: white">Welcome</h2>
         </tr>
@@ -30,13 +30,14 @@
       </b-navbar>
     </div>
   <div class="container">
-    <h1>Dashboard</h1>
+    <h1 style="margin: 50px">Dashboard</h1>
+    <h4>กราฟแสดงค่าเฉลี่ยแรงกดในแต่ละครั้ง</h4>
     <bar-chart style="width: 90%; height: 500px; margin-left: 15%;"></bar-chart>
     <!-- <button @click="fillData()">Randomize</button> -->
     </div>
-    <footer>
+    <!-- <footer>
     <p>© 2021 Lorem ipsum</p>
-    </footer>
+    </footer> -->
 </div>
 </template>
 
@@ -87,7 +88,7 @@ footer {
 .insidebar {
   position: relative;
   text-align: center;
-  top: 20%;
+  top: 10%;
   /* transform: translateY(-50%); */
   /* margin: 0 15%; */
   font-weight: bold;
