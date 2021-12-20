@@ -38,10 +38,10 @@ export default new Router({
       name: 'LiveChart',
       component: () => import('../components/LiveChart.vue'),
     },
-    // {
-    //   path: '/',
-    //   name: 'Dashboard',
-    //   component: Dashboard
-    // }
+    {
+      path: '/ChartRealtime',
+      name: 'ChartRealtime',
+      component: () => import('../components/ChartRealtime.vue'),
+    }
   ]
 })

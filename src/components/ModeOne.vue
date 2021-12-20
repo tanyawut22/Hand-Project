@@ -82,29 +82,15 @@
 </div>
 </template>
 
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+
 <script>
 import image from "../assets/front.gif"
 import LineChart from './LineChart'
 //-------------------------------------
-// import {database} from '../config'
-// import firebaseApp from '../config'
-// import { getDatabase, ref, onValue} from "firebase/database";
-
-// import firebase from 'firebase/compat/app'
 import {db} from '../config';
 import 'firebase/compat/firestore'
 import 'firebase/compat/database'
 import { getDatabase, ref, child, get, onValue } from "firebase/database";
-
-
-// firebase.initializeApp(firebaseConfig);
-// export const db = firebase.database();
-// export const dbf = firebase.firestore()
-// console.log(dbf);
-
-
-// console.log(dbRef);
 
 //--------------------------------------------------------
 
@@ -119,49 +105,30 @@ import { getDatabase, ref, child, get, onValue } from "firebase/database";
         image: image,
         datacollection: null,
         ForcData:[],
+        FD:[],
         timerCount: 0,
         TimeSec:[],
+        StatusPush: null,
+        timeDone: 0,
         // CountTimeForce:[], 
       }
     },
 
     methods: {
-      // fillData () {
-      //   this.datacollection = {
-      //     labels: ["0 sec", "1 sec", "2 sec", "3 sec", "4 sec", "5 sec", "6 sec", "7 sec", "8 sec", "9 sec", "10 sec"],
-      //     datasets: [
-      //       {
-      //         label: 'Data One',
-      //         // backgroundColor: '#f87979',
-      //         borderColor: '#2554FF',
-      //         borderWidth: 2,
-      //         // backgroundColor: '#2554FF',
-      //         // data: ["0", this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
-      //         // data: ["0", 10, 30, 50, 50, 50, 50, 50, 50, 50]
-      //         data: this.ForcData,
-      //       }, 
-      //     ],
-          
-      //   }
-      // },
-
       GetData(){
             const dbRef = ref(db, 'Sensor');
-            onValue(dbRef, (snapshot) => {
-              // const data = snapshot.val().Data;
-              this.ForcData.push(snapshot.val().Data)
-              // if (snapshot.val().Data==0){
-              //   this.ForcData.push(0)
-              // }
-              // else {
-              //   this.ForcData.push(snapshot.val().Data)
-              // }
-              // console.log(snapshot.val().Data);
-              // const tempVal = this.datacollection.datasets.data
+            // setTimeout(()=>{
+              onValue(dbRef, (snapshot) => {
+                // setTimeout(()=>{
+                  // const data = snapshot.val().Data;
+                  // this.ForcData.push(snapshot.val().Data);
+                  this.StatusPush=snapshot.val().Status;
+                  // console.log(this.ForcData);
+                  console.log(this.StatusPush);
+              });
+              // }, 1000);
+            // },1);
 
-              // this.addData(this.ForcData);
-              // this.Data = push(data);
-            });
 
       },
 
@@ -173,8 +140,8 @@ import { getDatabase, ref, child, get, onValue } from "firebase/database";
               label: ['Force'],
               fill: false,
               borderWidth: 2,
-              borderColor: '#f87979',
-              backgroundColor: '#f87979',
+              borderColor: '#2554FF',
+              backgroundColor: '#2554FF',
               data: this.ForcData,
             },
           ],
@@ -191,33 +158,36 @@ import { getDatabase, ref, child, get, onValue } from "firebase/database";
             }
           
         }
-        // this.CountingTime();
       },
-      // watch: {
-
-      //       timerCount: {
-      //           handler(value) {
-
-      //               if (value > 0) {
-      //                   setTimeout(() => {
-      //                       this.timerCount--;
-      //                       console.log(timerCount);
-      //                   }, 1000);
-      //               }
-
-      //           },
-      //           immediate: true // This ensures the watcher is triggered upon creation
-      //       }
-      // },
 
 
   },
+        updated(){
+          // setTimeout(() => {
+          if(this.StatusPush==false){
+            // setTimeout(() => {
+                    this.ForcData.push(0)
+                    console.log(this.ForcData)  
+            // }, 1000);
+          }
+          else if(this.StatusPush==true){
+            const dbRef = ref(db, 'Sensor');
+            setTimeout(() => {
+            onValue(dbRef, (snapshot) => {
+              // setTimeout(()=>{
+              this.ForcData.push(snapshot.val().Data);
+              console.log(this.ForcData)
+              // },1000);
+              });
+              }, 1000);
+          }
+          // }, 1000);
+        },
   created(){
       this.fillData();
-      this.GetData();
+      // this.GetData();
     },
     watch: {
-
             timerCount: {
                 handler(value) {
  
@@ -237,27 +207,49 @@ import { getDatabase, ref, child, get, onValue } from "firebase/database";
                 },
                 immediate: true // This ensures the watcher is triggered upon creation
             },
-            ForcData: {
-              handler(value) {
-                if(value[value.length-1]==0){
-                  setTimeout(()=>{
-                    this.ForcData.push(0)
-                    this.fillData();
-                    console.log(value)
-                    // console.log(this.ForcData)
-                    }, 1000);
-                }
-                // else if(value[value.length-1]!=0){
-                //   setTimeout(()=>{
-                //   this.ForcData.push(this.ForcData)
-                //     this.fillData();
-                //     console.log(value)
-                //     }, 1000);
-                // }
-              },
-              immediate: true
+            // ForcData: {
+            //   handler(value) {
+            //     if(49<=value<=60){
+            //       // setTimeout(()=>{
+            //         setTimeout(()=>{
+            //         this.timeDone++;
+            //         if (this.timeDone==10){
+            //           alert("10 sec Succeed")
+            //         }
+            //         // console.log(this.ForcData)
+            //         }, 1000);
+            //     }
+            //   },
+            //   immediate: true
               
-            }
+            // },
+            // ForcData: {
+            //   handler(value) {
+            //     if(value[value.length-1]==0){
+            //       setTimeout(()=>{
+            //         this.ForcData[value.length-1]=0;
+            //         console.log(this.ForcData[value.length-1]);
+            //         // this.ForcData.push(0);
+            //         this.fillData();
+            //         console.log(value)
+            //         // console.log(this.ForcData)
+            //         }, 1000);
+            //     }
+            //   },
+            //   immediate: true
+              
+            // },
+            // StatusPush: {
+            //     handler(value) {
+            //     if(value==false){
+            //       setTimeout(()=>{
+            //         this.ForcData.push(0)
+            //         console.log(this.ForcData)
+            //         }, 1000);
+            //     }
+            //     },
+            //   immediate: true
+            // }
       },
     // actions:{
     //     fetchUserData:({commit}) => {
@@ -275,8 +267,9 @@ import { getDatabase, ref, child, get, onValue } from "firebase/database";
     // },
     mounted(){
       // this.fillData();
-      // this.GetData();
+      this.GetData();
     }
+  
   }
 
 </script>
